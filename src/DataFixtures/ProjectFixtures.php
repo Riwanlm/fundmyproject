@@ -2,11 +2,13 @@
 
 namespace App\DataFixtures;
 
+use App\Controller\CategoryController;
 use App\Entity\Project;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class ProjectFixtures extends Fixture
+class ProjectFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -21,7 +23,9 @@ class ProjectFixtures extends Fixture
         $goodgirl->setCreatedAt(new \DateTime("2020-01-01 09:35:24"));
         $goodgirl->setGoal(10000.00);
         $goodgirl->addCategory($this->getReference("Categorie-film"));
+        $goodgirl->setUser($this->getReference("John"));
         $manager->persist($goodgirl);
+        $this->addReference("goodgirl", $goodgirl);
 
         $lesyeuxdanslebus = new Project();
         $lesyeuxdanslebus->setName("Les yeux dans le bus");
@@ -32,7 +36,9 @@ class ProjectFixtures extends Fixture
         $lesyeuxdanslebus->setGoal(11354.55);
         $lesyeuxdanslebus->addCategory($this->getReference("Categorie-sport"));
         $lesyeuxdanslebus->addCategory($this->getReference("Categorie-film"));
+        $lesyeuxdanslebus->setUser($this->getReference("John"));
         $manager->persist($lesyeuxdanslebus);
+        $this->addReference("lesyeuxdanslebus", $lesyeuxdanslebus);
 
         $dabado = new Project();
         $dabado->setName("Dabado");
@@ -42,7 +48,9 @@ class ProjectFixtures extends Fixture
         $dabado->setCreatedAt(new \DateTime("2019-04-10 12:54:00"));
         $dabado->setGoal(12200.00);
         $dabado->addCategory($this->getReference("Categorie-jeux"));
+        $dabado->setUser($this->getReference("John"));
         $manager->persist($dabado);
+        $this->addReference("dabado", $dabado);
 
         $doosh = new Project();
         $doosh->setName("DOOSH");
@@ -53,8 +61,23 @@ class ProjectFixtures extends Fixture
         $doosh->setGoal(13599.99);
         $doosh->addCategory($this->getReference("Categorie-musique"));
         $doosh->addCategory($this->getReference("Categorie-film"));
+        $doosh->setUser($this->getReference("John"));
         $manager->persist($doosh);
+        $this->addReference("doosh", $doosh);
 
         $manager->flush();
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDependencies()
+    {
+        return[
+          CategoryFixtures::class,
+          UserFixtures::class,
+        ];
+    }
 }
+
+

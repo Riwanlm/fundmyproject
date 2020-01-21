@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserFixtures extends Fixture
 {
     private $encoder;
+
     /**
      * UserFixtures constructor
      */
@@ -30,7 +31,19 @@ class UserFixtures extends Fixture
         $admin->setPassword($this->encoder->encodePassword($admin,"litzavse"));
         $admin->setRoles(["ROLE_ADMIN"]);
         $manager->persist($admin);
+        $this->addReference("Riwan", $admin);
+
+
+        $notadmin = new User();
+        $notadmin->setFirstname("John");
+        $notadmin->setLastname("Doe");
+        $notadmin->setEmail("john.doe@hotmail.fr");
+        $notadmin->setPassword($this->encoder->encodePassword($notadmin, "jdojdo"));
+        $notadmin->setRoles(["ROLE_USER"]);
+        $manager->persist($notadmin);
+        $this->addReference("John", $notadmin);
 
         $manager->flush();
+
     }
 }
