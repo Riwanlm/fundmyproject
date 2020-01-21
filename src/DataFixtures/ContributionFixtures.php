@@ -14,7 +14,7 @@ class ContributionFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
         $amount = new Contribution();
-        $amount->setAmount(number_format());
+        $amount->setAmount(10000.00);
         $manager->persist($amount);
 
         $manager->flush();
