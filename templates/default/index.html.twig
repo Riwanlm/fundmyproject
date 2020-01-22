@@ -3,32 +3,30 @@
 {% block title %}Fund My Project{% endblock %}
 
 {% block body %}
-    <main class="page-content">
-        <div class="container">
-            <h1>Bienvenue sur Fund My Project</h1>
-            <p>Aidez-nous à créer de nouveaux projets chaque jour !</p>
-            <div class="row">
-                {% for project in projects %}
-                    <article class="col-4">
-                        <div class="card">
-                            <img src="{{ asset('uploads/' ~ project.image)}}" class="card-img-top" alt="{{ project.name }}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ project.name }}</h5>
-                                <ul class="badges">
-                                    {% for category in project.categories %}
-                                        <li><a href="{{ path('category_show', {'id': category.id}) }}" class="badge badge-pill badge-primary">{{ category.name }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                                <p class="card-text">{{ project.excerpt }}</p>
-                                <a href="{{ path('project_show', {'id': project.id}) }}" class="btn btn-primary">
-                                    <i class="fa fa-eye"></i>
-                                    Voir plus
-                                </a>
-                            </div>
+    <div class="container">
+        <h1>Bienvenue sur Fund My Project</h1>
+        <p>Aidez-nous à créer de nouveaux projets chaque jour !</p>
+        <div class="row">
+            {% for project in projects %}
+                <article class="col-4">
+                    <div class="card">
+                        <img src="{{ asset('uploads/' ~ project.image)}}" class="card-img-top" alt="{{ project.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ project.name }}</h5>
+                            <ul class="badges">
+                                {% for category in project.categories %}
+                                    <li><a href="{{ path('category_show', {'id': category.id}) }}" class="badge badge-pill badge-primary">{{ category.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                            <p class="card-text">{{ project.excerpt }}</p>
+                            <a href="{{ path('project_show', {'id': project.id}) }}" class="btn btn-primary">
+                                <i class="fa fa-eye"></i>
+                                Voir plus
+                            </a>
                         </div>
-                    </article>
-                {% endfor %}
-            </div>
+                    </div>
+                </article>
+            {% endfor %}
         </div>
-    </main>
+    </div>
 {% endblock %}
