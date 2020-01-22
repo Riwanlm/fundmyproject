@@ -12,7 +12,7 @@
     <header class="page-header">
         <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
             <div class="container">
-                <a href="index.html" class="navbar-brand">Fund My Project</a>
+                <a href="{{ path('homepage')}}" class="navbar-brand">Fund My Project</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -30,11 +30,20 @@
                                 <a class="dropdown-item" href="category.html">Jeux</a>
                             </div>
                         </li>
+                        {% if app.user %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a></li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li class="nav-item"><a class="nav-link" href="{{ path('easyadmin') }}">Administration</a></li>
+                            {% endif %}
+                        {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_login') }}">
+
                                 <i class="fa fa-sign-in"></i>
                                 Me connecter
                             </a>
+                        {% endif %}
+
                         </li>
                     </ul>
                 </div>
